@@ -9,9 +9,9 @@ exports[`Render ExpenseListItem with fixture data 1`] = `
       Rent
     </h3>
     <p>
-      123400
-       - 
-      -345600000
+      $1,234.00
+      -
+      December 28th, 1969
     </p>
   </Link>
 </div>

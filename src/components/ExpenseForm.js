@@ -36,10 +36,11 @@ export default class ExpenseForm extends React.Component {
             this.props.onSubmit({
                 description: this.state.description,
                 note: this.state.note,
-                amount: parseFloat(this.state.amount, 10) * 100,
+                amount: parseFloat(this.state.amount, 10) * 100.00,
                 createdAt: this.state.createdAt.valueOf() 
             });
-            console.log('submitted');
+            // console.log('submitted', this.state.amount);
+            // console.log('submitted', parseFloat(this.state.amount).toFixed(2) * 100);
         }
     };
 
@@ -47,6 +48,9 @@ export default class ExpenseForm extends React.Component {
         const amount = e.target.value;
         if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
             this.setState(()=>({ amount }));
+            // console.log('amount: ', amount);
+            // console.log('this.state.amount: ', this.state.amount);
+            // console.log('parseFloat: ', parseFloat(this.state.amount, 10) * 100 );
         }
     };
 

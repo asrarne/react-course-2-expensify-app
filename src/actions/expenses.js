@@ -1,24 +1,38 @@
-import uuid from 'uuid';
-import moment from 'moment';
+// import uuid from 'uuid';
+// import moment from 'moment';
+import dbExpenseRef from '../firebase/firebase';
+import { set, push } from 'firebase/database';
 
 //action generators
 //ADD_EXPENSE
-export const addExpense = (
-    { description='', 
-      note='', 
-      amount=0, 
-      createdAt=0
-    } = {}
-) => ({
+export const addExpense = (expense) => ({
     type: 'ADD_EXPENSE',
-    expense: {
-        id: uuid(),
-        description,
-        note, 
-        amount,
-        createdAt   
-    }
+    expense
 });
+
+export const startAddExpense = (expenseData = {}) => {
+    return (dispatch) => {
+        const {
+                description = '', 
+                note = '', 
+                amount = 0, 
+                createdAt = 0
+                } = expenseData;
+        const expense = { description, note, amount, createdAt };
+
+        const newExpenseRef = push(dbExpenseRef);
+
+        return set(newExpenseRef, expense)
+        .then(()=>{
+            dispatch(addExpense({
+                id: newExpenseRef.key,
+                ...expense
+            }));
+        }).catch((e) => {
+            console.log('startAddExpense failed with error: ', e);
+        });
+    };
+}; 
 
 //REMOVE_EXPENSE
 export const removeExpense = ({id} = {}) => ({

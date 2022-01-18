@@ -13,19 +13,6 @@ exports[`should render ExpensesSummary with 1 expense correctly 1`] = `
 </div>
 `;
 
-exports[`should render ExpensesSummary with expenses correctly 1`] = `
-<div>
-  <p>
-    Viewing 
-    3
-     
-    expenses
-     totalling 
-    $1,240.55
-  </p>
-</div>
-`;
-
 exports[`should render ExpensesSummary with multiple expenses correctly 1`] = `
 <div>
   <p>
@@ -35,19 +22,6 @@ exports[`should render ExpensesSummary with multiple expenses correctly 1`] = `
     expenses
      totalling 
     $234,567.89
-  </p>
-</div>
-`;
-
-exports[`should render ExpensesSummary with no expenses correctly 1`] = `
-<div>
-  <p>
-    Viewing 
-    0
-     
-    expenses
-     totalling 
-    $0.00
   </p>
 </div>
 `;

@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { addExpense, removeExpense, editExpense, startAddExpense, setExpenses, startSetExpenses } from "../../actions/expenses";
+import { addExpense, removeExpense, editExpense, startAddExpense, setExpenses, startSetExpenses, startRemoveExpense, startEditExpense } from "../../actions/expenses";
 import expenses from '../fixtures/expenses';
 import dbExpenseRef, { db }  from '../../firebase/firebase';
 import {ref, onValue, get, set} from 'firebase/database';
@@ -124,3 +124,43 @@ test('should fetch the expenses from firebase', (done)=>{
     });
 });
 
+test('should remove the expense from firebase if it exists in it', (done) => {
+    const store = createMockStore({});
+    const id = 1;
+    store.dispatch(startRemoveExpense({id})).then(() => {
+        const action = store.getActions();
+        expect(action[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id
+        });
+        const dbRef = ref(db, `expenses/${id}`);
+        return get(dbRef);
+    }).then((snapshot) => {
+        expect(snapshot.val()).toBeNull();
+        done();
+    });
+});
+
+test('should edit the expense and save in firebase', (done) => {
+    const store = createMockStore({});
+    const id = expenses[1].id;
+    const { description, note, amount, createdAt } = expenses[1];
+    const updates = {
+                        description: 'new description',
+                        note: 'new note',
+                        amount: 234500
+                    };
+    store.dispatch(startEditExpense(id, updates)).then(()=>{
+        const action = store.getActions();
+        expect(action[0]).toEqual({
+            type: 'EDIT_EXPENSE',
+            id,
+            updates
+        });
+        const dbRef = ref(db, `expenses/${id}`);
+        return get(dbRef);
+    }).then((snapshot)=>{
+            expect(snapshot.val()).toEqual({ description, note, amount, createdAt, ...updates });
+            done();
+    });
+});

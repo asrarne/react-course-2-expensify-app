@@ -1,7 +1,7 @@
 // import uuid from 'uuid';
 // import moment from 'moment';
-import dbExpenseRef from '../firebase/firebase';
-import { set, push, onValue, get } from 'firebase/database';
+import dbExpenseRef, { db } from '../firebase/firebase';
+import { set, push, onValue, get, ref, remove, update } from 'firebase/database';
 import expenses from '../tests/fixtures/expenses';
 
 //action generators
@@ -59,6 +59,7 @@ export const startSetExpenses = () => {
             if (snapshot.exists()) {
                 let expenses = [];
                 snapshot.forEach((childSnapshot) => {
+                    // console.log('in startSetExpenses: ', childSnapshot.val());
                     expenses.push({
                         id: childSnapshot.key,
                         ...childSnapshot.val()
@@ -68,8 +69,30 @@ export const startSetExpenses = () => {
             } else {
                 console.log("No data available");
             }
-        }).catch((e)=>{
-                console.log('Error in startSetExpenses: ',e);
+        }).catch((error)=>{
+                console.log('Error in startSetExpenses: ', error);
+        });
+    };
+};
+
+export const startRemoveExpense = ({id} = {}) => {
+    return (dispatch) => {
+        const dbExpenseRefwithId = ref(db, 'expenses/' + id);
+        return remove(dbExpenseRefwithId).then(()=>{
+            dispatch(removeExpense({id}));
+        }).catch((error)=>{
+            console.log('Error in startRemoveExpense: ', error);
+        });
+    };
+};
+
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        const dbExpenseRefwithId = ref(db, 'expenses/' + id);
+        return update ((dbExpenseRefwithId),updates).then(()=>{
+            dispatch(editExpense(id, updates));
+        }).catch((error)=>{
+            console.log('error in startEditExpense:', error);
         });
     };
 };

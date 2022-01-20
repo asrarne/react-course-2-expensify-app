@@ -1,7 +1,8 @@
 // import uuid from 'uuid';
 // import moment from 'moment';
 import dbExpenseRef from '../firebase/firebase';
-import { set, push } from 'firebase/database';
+import { set, push, onValue, get } from 'firebase/database';
+import expenses from '../tests/fixtures/expenses';
 
 //action generators
 //ADD_EXPENSE
@@ -46,3 +47,29 @@ export const editExpense = (id, updates ) => ({
     id,
     updates
 });
+
+export const setExpenses = (expenses) => ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+export const startSetExpenses = () => {
+    return (dispatch) => {
+        return get(dbExpenseRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                let expenses = [];
+                snapshot.forEach((childSnapshot) => {
+                    expenses.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                dispatch(setExpenses(expenses));
+            } else {
+                console.log("No data available");
+            }
+        }).catch((e)=>{
+                console.log('Error in startSetExpenses: ',e);
+        });
+    };
+};

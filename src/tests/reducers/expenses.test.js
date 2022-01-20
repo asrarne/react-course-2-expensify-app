@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { setExpenses } from '../../actions/expenses';
 import expensesReducers from '../../reducers/expenses';
 import expenses from '../fixtures/expenses';
 
@@ -56,7 +57,7 @@ test('should edit an expense', () => {
 });
 // should not edit an expense if id not found
 
-test('should edit an expense', () => {
+test('should not edit an expense if id not found', () => {
     const action = {
         type: 'EDIT_EXPENSE',
         id: '-1',
@@ -68,3 +69,12 @@ test('should edit an expense', () => {
     const state = expensesReducers(expenses, action);
     expect(state).toEqual(expenses);
 });
+
+test('should set expenses', () => {
+    const action = {
+        type: 'SET_EXPENSES',
+        expenses
+    };
+    const state = expensesReducers(undefined, action);
+    expect(state).toEqual(expenses);
+} );

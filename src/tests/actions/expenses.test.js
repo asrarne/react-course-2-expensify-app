@@ -2,11 +2,13 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { addExpense, removeExpense, editExpense, startAddExpense, setExpenses, startSetExpenses, startRemoveExpense, startEditExpense } from "../../actions/expenses";
 import expenses from '../fixtures/expenses';
-import dbExpenseRef, { db }  from '../../firebase/firebase';
+import { db }  from '../../firebase/firebase';
 import {ref, onValue, get, set} from 'firebase/database';
 
 const createMockStore = configureMockStore([thunk]);
-
+const uid = 'thisismytestuid';
+const dbExpenseRef = ref(db, `users/${uid}/expenses`);
+const defaultAuthState = { auth: { uid }};
 beforeEach((done) => {
     const expenseData = {};
     expenses.forEach(({id, description, amount, note, createdAt}) => {
@@ -55,7 +57,7 @@ test('should setup add expense action object with provided values', () => {
 });
 
 test('should add exepense to database and store', (done)=>{
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const expenseData = {
                             description: 'This is the description',
                             amount: 1500,
@@ -71,7 +73,7 @@ test('should add exepense to database and store', (done)=>{
             ...expenseData
             }
         });
-        const dbRef = ref(db, `expenses/${action[0].expense.id}`);
+        const dbRef = ref(db, `users/${uid}/expenses/${action[0].expense.id}`);
         return get(dbRef);
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData);
@@ -80,7 +82,7 @@ test('should add exepense to database and store', (done)=>{
 });
 
 test('should add expense with default value to database and store', (done)=>{
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const expenseData = {
                             description: '',
                             amount: 0,
@@ -96,7 +98,7 @@ test('should add expense with default value to database and store', (done)=>{
             ...expenseData
             }
         });
-        const dbRef = ref(db, `expenses/${action[0].expense.id}`);
+        const dbRef = ref(db, `users/${uid}/expenses/${action[0].expense.id}`);
         return get(dbRef);
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData);
@@ -113,7 +115,7 @@ test('should setup set expense action object with data', () => {
 });
 
 test('should fetch the expenses from firebase', (done)=>{
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     store.dispatch(startSetExpenses()).then(()=>{
         const action = store.getActions();
         expect(action[0]).toEqual({
@@ -125,7 +127,7 @@ test('should fetch the expenses from firebase', (done)=>{
 });
 
 test('should remove the expense from firebase if it exists in it', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const id = 1;
     store.dispatch(startRemoveExpense({id})).then(() => {
         const action = store.getActions();
@@ -133,7 +135,7 @@ test('should remove the expense from firebase if it exists in it', (done) => {
             type: 'REMOVE_EXPENSE',
             id
         });
-        const dbRef = ref(db, `expenses/${id}`);
+        const dbRef = ref(db, `users/${uid}/expenses/${id}`);
         return get(dbRef);
     }).then((snapshot) => {
         expect(snapshot.val()).toBeNull();
@@ -142,7 +144,7 @@ test('should remove the expense from firebase if it exists in it', (done) => {
 });
 
 test('should edit the expense and save in firebase', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const id = expenses[1].id;
     const { description, note, amount, createdAt } = expenses[1];
     const updates = {
@@ -157,7 +159,7 @@ test('should edit the expense and save in firebase', (done) => {
             id,
             updates
         });
-        const dbRef = ref(db, `expenses/${id}`);
+        const dbRef = ref(db, `users/${uid}/expenses/${id}`);
         return get(dbRef);
     }).then((snapshot)=>{
             expect(snapshot.val()).toEqual({ description, note, amount, createdAt, ...updates });

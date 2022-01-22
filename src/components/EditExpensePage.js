@@ -16,7 +16,7 @@ export class EditExpensePage extends React.Component {
     }
 
     goToHome = () => {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/');
     }
 
     render() {

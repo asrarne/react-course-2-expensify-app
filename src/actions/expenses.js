@@ -1,8 +1,8 @@
 // import uuid from 'uuid';
 // import moment from 'moment';
-import dbExpenseRef, { db } from '../firebase/firebase';
+import { db } from '../firebase/firebase';
 import { set, push, onValue, get, ref, remove, update } from 'firebase/database';
-import expenses from '../tests/fixtures/expenses';
+// import expenses from '../tests/fixtures/expenses';
 
 //action generators
 //ADD_EXPENSE
@@ -12,7 +12,9 @@ export const addExpense = (expense) => ({
 });
 
 export const startAddExpense = (expenseData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        const dbExpenseRef = ref(db, `users/${uid}/expenses`);
         const {
                 description = '', 
                 note = '', 
@@ -54,7 +56,9 @@ export const setExpenses = (expenses) => ({
 });
 
 export const startSetExpenses = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        const dbExpenseRef = ref(db, `users/${uid}/expenses`);
         return get(dbExpenseRef).then((snapshot) => {
             if (snapshot.exists()) {
                 let expenses = [];
@@ -76,8 +80,9 @@ export const startSetExpenses = () => {
 };
 
 export const startRemoveExpense = ({id} = {}) => {
-    return (dispatch) => {
-        const dbExpenseRefwithId = ref(db, 'expenses/' + id);
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        const dbExpenseRefwithId = ref(db, `users/${uid}/expenses/${id}`);
         return remove(dbExpenseRefwithId).then(()=>{
             dispatch(removeExpense({id}));
         }).catch((error)=>{
@@ -87,8 +92,9 @@ export const startRemoveExpense = ({id} = {}) => {
 };
 
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
-        const dbExpenseRefwithId = ref(db, 'expenses/' + id);
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        const dbExpenseRefwithId = ref(db, `users/${uid}/expenses/${id}`);
         return update ((dbExpenseRefwithId),updates).then(()=>{
             dispatch(editExpense(id, updates));
         }).catch((error)=>{

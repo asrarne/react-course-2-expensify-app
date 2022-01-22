@@ -1,4 +1,10 @@
-import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from "../../actions/filters";
+import { 
+            setTextFilter,
+            sortByDate,
+            sortByAmount,
+            setStartDate,
+            setEndDate
+        } from "../../actions/filters";
 import moment from 'moment';
 
 // test for set text filter action object with provided value

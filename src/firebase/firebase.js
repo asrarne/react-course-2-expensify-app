@@ -4,6 +4,7 @@
 import { initializeApp } from "firebase/app";
 // import {getDatabase, ref, set, update, remove, onValue, push, child, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
 import { getDatabase, ref } from 'firebase/database';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import moment from "moment";
 
 // Your web app's Firebase configuration
@@ -22,10 +23,13 @@ const app = initializeApp(firebaseConfig);
 // console.log(app);
 // const database = firebase.database();
 
+const googleAuthProvider = new GoogleAuthProvider();
+const auth = getAuth();
+
 const db = getDatabase();
 const dbExpenseRef = ref(db, 'expenses');
 
-
+export {db, auth, googleAuthProvider, dbExpenseRef as default};
 // onValue(dbRef, (snapshot) => {
 //     const expenses = [];
 //     snapshot.forEach((childSnapshot) => {
@@ -115,7 +119,7 @@ const dbExpenseRef = ref(db, 'expenses');
 //     console.log('update 2 failed:', e);
 // });
 
-export {db, dbExpenseRef as default};
+
 
 // const readRef = ref(db);
 // onValue(readRef, (snapshot) => {

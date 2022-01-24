@@ -24,7 +24,7 @@ exports[`should render ExpensesSummary with 1 expense and 1 hidden expense with 
     <p
       className="page-header__title"
     >
-      Showing all expenses
+      Showing all expenses.
     </p>
     <div
       className="page-header__actions"
@@ -64,7 +64,7 @@ exports[`should render ExpensesSummary with 1 expense and multiple hidden expens
     <p
       className="page-header__title"
     >
-      Not showing 2 expenses because of filter
+      Not showing 2 expenses because of filters.
     </p>
     <div
       className="page-header__actions"
@@ -104,7 +104,7 @@ exports[`should render ExpensesSummary with 1 expense and no hidden expense with
     <p
       className="page-header__title"
     >
-      Showing all expenses
+      Showing all expenses.
     </p>
     <div
       className="page-header__actions"
@@ -144,7 +144,7 @@ exports[`should render ExpensesSummary with 1 expense and no hidden expense with
     <p
       className="page-header__title"
     >
-      Showing all expenses, No filter in place
+      Showing all expenses, No filter in place.
     </p>
     <div
       className="page-header__actions"
@@ -184,7 +184,7 @@ exports[`should render ExpensesSummary with multiple expenses and 1 hidden expen
     <p
       className="page-header__title"
     >
-      Not showing 1 expense because of filter
+      Not showing 1 expense because of filters.
     </p>
     <div
       className="page-header__actions"
@@ -224,7 +224,7 @@ exports[`should render ExpensesSummary with multiple expenses and multiple hidde
     <p
       className="page-header__title"
     >
-      Not showing 10 expenses because of filter
+      Not showing 10 expenses because of filters.
     </p>
     <div
       className="page-header__actions"
@@ -264,7 +264,7 @@ exports[`should render ExpensesSummary with multiple expenses and no hidden expe
     <p
       className="page-header__title"
     >
-      Showing all expenses
+      Showing all expenses.
     </p>
     <div
       className="page-header__actions"
@@ -304,7 +304,7 @@ exports[`should render ExpensesSummary with multiple expenses and no hidden expe
     <p
       className="page-header__title"
     >
-      Showing all expenses, No filter in place
+      Showing all expenses, No filter in place.
     </p>
     <div
       className="page-header__actions"

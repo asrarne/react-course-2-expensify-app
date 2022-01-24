@@ -16,9 +16,9 @@ export const ExpensesSummary = ({ expenseCount,
     const formattedExpenseTotal = numeral(expensesTotal/100).format('$0,0.00');
     const hiddenExpenseWord = hiddenExpenseCount > 0 ? 
                                 ( hiddenExpenseCount === 1 ? 
-                                    ('Not showing 1 expense because of filter') : 
-                                    (`Not showing ${hiddenExpenseCount} expenses because of filter`) ) :
-                                ('Showing all expenses' + (noFilterInPlace ? ', No filter in place' : ''));
+                                    ('Not showing 1 expense because of filters.') : 
+                                    (`Not showing ${hiddenExpenseCount} expenses because of filters.`) ) :
+                                ('Showing all expenses' + (noFilterInPlace ? ', No filter in place.' : '.'));
     return (
         <div className="page-header">
             <div className="content-container">

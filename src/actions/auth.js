@@ -1,4 +1,11 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getAuth,
+         GoogleAuthProvider,
+         signInWithPopup,
+         FacebookAuthProvider,
+         TwitterAuthProvider,
+         GithubAuthProvider,
+         signInWithRedirect,
+         signOut } from 'firebase/auth';
 
 
 export const login = (uid) => ({
@@ -6,10 +13,11 @@ export const login = (uid) => ({
     uid
 });
 
-export const startLogin = () => {
+export const startLogin = (provider) => {
     return () => {
         const auth = getAuth();
-        const provider = new GoogleAuthProvider();
+        // const provider = new GoogleAuthProvider();
+        // provider.setCustomParameters({ 'prompt': 'select_account' });
         return signInWithPopup(auth, provider);
     };    
 };

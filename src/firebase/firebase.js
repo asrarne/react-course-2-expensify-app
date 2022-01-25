@@ -4,7 +4,12 @@
 import { initializeApp } from "firebase/app";
 // import {getDatabase, ref, set, update, remove, onValue, push, child, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
 import { getDatabase, ref } from 'firebase/database';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, 
+         GoogleAuthProvider,
+         FacebookAuthProvider,
+         TwitterAuthProvider,
+         GithubAuthProvider,
+         signInWithPopup } from 'firebase/auth';
 // import moment from "moment";
 
 // Your web app's Firebase configuration
@@ -24,12 +29,37 @@ const app = initializeApp(firebaseConfig);
 // const database = firebase.database();
 
 const googleAuthProvider = new GoogleAuthProvider();
+googleAuthProvider.setCustomParameters({ 'prompt': 'select_account' });
+
+const facebookAuthProvider = new FacebookAuthProvider();
+facebookAuthProvider.setCustomParameters({ 'prompt': 'select_account',
+                                           'display': 'popup'
+                                          });
+
+const twitterAuthProvider = new TwitterAuthProvider();
+twitterAuthProvider.setCustomParameters({
+                                          'prompt': 'select_account',
+                                          'display': 'popup'
+                                        });
+
+const githubAuthProvider = new GithubAuthProvider();
+githubAuthProvider.setCustomParameters({
+                                          'prompt': 'select_account',
+                                          'display': 'popup'
+                                        });
+
 const auth = getAuth();
 
 const db = getDatabase();
 const dbExpenseRef = ref(db, 'expenses');
 
-export {db, auth, googleAuthProvider, dbExpenseRef as default};
+export {  db,
+          auth,
+          googleAuthProvider,
+          facebookAuthProvider,
+          twitterAuthProvider,
+          githubAuthProvider,
+          dbExpenseRef as default};
 // onValue(dbRef, (snapshot) => {
 //     const expenses = [];
 //     snapshot.forEach((childSnapshot) => {

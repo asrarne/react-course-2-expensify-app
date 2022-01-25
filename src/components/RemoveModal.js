@@ -12,9 +12,11 @@ const RemoveModal = (props) => (
         className="modal"
     >
         <h3 className="modal__title"> Do you want to remove expense?</h3>
-        <div className="modal__action">
-        <button className="button" onClick={props.handleRemoveYes}>Yes</button>
-        <button className="button" onClick={props.handleRemoveNo}>No</button>
+        <div className="content-container">
+            <div className="modal__action">
+                <button className="button" onClick={props.handleRemoveYes}>Yes</button>
+                <button className="button" onClick={props.handleRemoveNo}>No</button>
+            </div>
         </div>
     </Modal>
 );

@@ -18,12 +18,13 @@
 }
 
 .modal {
-    background: $light-blue;
-    color: white;
+    background: $dark-blue; // $light-blue;
+    color: $off-white; // white;
     max-width: 30rem;
     outline: none;
     padding: $l-size;
     text-align: center;
+    border: 1px solid darken($off-white, 7%);
 }
 
 .modal__title {

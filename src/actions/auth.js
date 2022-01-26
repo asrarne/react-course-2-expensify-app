@@ -1,10 +1,5 @@
 import { getAuth,
-         GoogleAuthProvider,
          signInWithPopup,
-         FacebookAuthProvider,
-         TwitterAuthProvider,
-         GithubAuthProvider,
-         signInWithRedirect,
          signOut } from 'firebase/auth';
 
 

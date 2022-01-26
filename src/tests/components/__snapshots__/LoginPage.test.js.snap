@@ -15,12 +15,34 @@ exports[`should render login page correctly 1`] = `
     <p>
       It's time to get your expenses under control.
     </p>
-    <button
-      className="button"
-      onClick={[MockFunction]}
+    <div
+      className="box-layout__action"
     >
-      Login with Google
-    </button>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        Login with Google
+      </button>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        Login with Facebook
+      </button>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        Login with Twitter
+      </button>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        Login with GitHub
+      </button>
+    </div>
   </div>
 </div>
 `;

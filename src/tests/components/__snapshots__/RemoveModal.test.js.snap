@@ -26,20 +26,24 @@ exports[`should render RemoveModal correctly 1`] = `
      Do you want to remove expense?
   </h3>
   <div
-    className="modal__action"
+    className="content-container"
   >
-    <button
-      className="button"
-      onClick={[MockFunction]}
+    <div
+      className="modal__action"
     >
-      Yes
-    </button>
-    <button
-      className="button"
-      onClick={[MockFunction]}
-    >
-      No
-    </button>
+      <button
+        className="button"
+        onClick={[MockFunction]}
+      >
+        Yes
+      </button>
+      <button
+        className="button"
+        onClick={[MockFunction]}
+      >
+        No
+      </button>
+    </div>
   </div>
 </Modal>
 `;

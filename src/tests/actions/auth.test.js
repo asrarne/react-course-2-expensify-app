@@ -1,4 +1,4 @@
-import { login, logout, startLogin, startLogout } from '../../actions/auth';
+import { login, logout } from '../../actions/auth';
 
 test('should setup auth action object for login',()=>{
     const uid = '123';
